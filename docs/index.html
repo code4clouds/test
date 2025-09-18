@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cristine — Enterprise AI Agent for M365 Copilot</title>
+  <meta name="description" content="Cristine: an enterprise-ready AI agent that extends Microsoft 365 Copilot with secure connectors, custom prompts, and governance for modern business workflows." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f1724; /* near-black navy */
+      --card:#0b1220;
+      --accent:#0ea5e9;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.04);
+      --success:#10b981;
+      --danger:#ef4444;
+      --max-width:1100px;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071026 0%, #071026 55%, #071a2b 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    .site{max-width:var(--max-width);margin:48px auto;padding:32px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:16px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 30px rgba(14,165,233,0.12)}
+    .logo svg{width:34px;height:34px}
+    .brand h1{font-size:18px;margin:0;font-weight:700}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+
+    nav a{color:var(--muted);text-decoration:none;margin-left:20px;font-weight:600}
+    nav a.primary{background:linear-gradient(90deg,var(--accent),#7c3aed);padding:10px 16px;border-radius:10px;color:#021124}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;margin-top:36px;align-items:center}
+    .eyebrow{display:inline-block;padding:8px 12px;background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));border-radius:999px;color:var(--accent);font-weight:700;font-size:12px}
+    .hero h2{font-size:40px;margin:18px 0 12px;line-height:1.02}
+    .hero p.lead{color:var(--muted);font-size:16px;margin:0 0 20px}
+
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;font-weight:700;border:0;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#021124}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* Right column card */
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:14px;padding:20px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .card h3{margin:0 0 8px}
+    .specs{display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:14px}
+
+    .features{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .feature{background:var(--card);border-radius:12px;padding:20px;min-height:160px;box-shadow:0 8px 24px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .feature h4{margin:0 0 8px}
+    .feature p{margin:0;color:var(--muted);font-size:14px}
+
+    .copilot{margin-top:48px;display:flex;gap:24px;align-items:center}
+    .copilot .details{flex:1}
+    .copilot .illustration{width:360px;text-align:center}
+
+    .download{margin-top:40px;background:linear-gradient(90deg,rgba(14,165,233,0.04),rgba(124,58,237,0.02));padding:20px;border-radius:12px;display:flex;align-items:center;justify-content:space-between}
+    .download .meta{display:flex;flex-direction:column}
+    .download .meta small{color:var(--muted)}
+    .download .actions{display:flex;gap:12px;align-items:center}
+
+    footer{margin-top:64px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .copilot .illustration{display:none}
+    }
+    @media (max-width:640px){
+      .features{grid-template-columns:1fr}
+      .site{padding:20px;margin:20px auto}
+      .logo{width:48px;height:48px}
+    }
+
+    /* small animation */
+    .feature:hover{transform:translateY(-6px);transition:transform .25s ease}
+    .btn{transition:transform .14s ease, box-shadow .14s ease}
+    .btn:active{transform:translateY(1px)}
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden>
+          <!-- Abstract C mark -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8S4 16.418 4 12z" stroke="white" stroke-opacity="0.14" stroke-width="1.5"/><path d="M7.75 12a4.25 4.25 0 0 1 8.5 0 4.25 4.25 0 0 1-8.5 0z" fill="white" fill-opacity="0.06"/></svg>
+        </div>
+        <div>
+          <h1>Cristine</h1>
+          <p>AI Agent | M365 Copilot Extensions</p>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#copilot">Copilot</a>
+        <a href="#download">Download</a>
+        <a class="primary" href="#contact">Request Demo</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="overview">
+        <div>
+          <span class="eyebrow">Enterprise</span>
+          <h2>Extend M365 Copilot with Cristine — Secure, Customizable, Enterprise-ready</h2>
+          <p class="lead">Cristine is a purpose-built AI agent that integrates seamlessly with Microsoft 365 Copilot to deliver governed, auditable, and business-optimized automation. Deploy connectors, customize prompts, and control AI behaviors for compliance-first organizations.</p>
+
+          <div class="cta-row">
+            <button class="btn primary" onclick="window.location='#copilot'">Explore Copilot Integration</button>
+            <button class="btn ghost" onclick="document.getElementById('download-button').scrollIntoView({behavior:'smooth'})">Download Latest Release</button>
+          </div>
+
+          <div style="margin-top:22px;color:var(--muted);font-size:13px">
+            <strong>Enterprise-ready:</strong> Single sign-on, tenant isolation, role-based access, and full audit trails.
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h3>Quick Specs</h3>
+            <div class="specs">
+              <div>Integrations: Microsoft Graph, SharePoint, Exchange, Teams</div>
+              <div>Deployment: Azure, SaaS, On-prem (private cloud)</div>
+              <div>Security: SSO, RBAC, Data residency & encryption</div>
+              <div>Governance: Prompt policies, logging, enterprise approvals</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="features" aria-label="Key features">
+        <article class="feature">
+          <h4>Copilot Extensions</h4>
+          <p>Package Cristine as a Copilot extension to provide task-specific workflows directly inside Microsoft 365 experiences — from Teams to Outlook.</p>
+        </article>
+
+        <article class="feature">
+          <h4>Custom Prompt Manager</h4>
+          <p>Define, version, and approve prompt libraries for consistent, auditable AI outputs aligned with corporate policy.</p>
+        </article>
+
+        <article class="feature">
+          <h4>Secure Connectors</h4>
+          <p>Connect to enterprise data stores with least-privilege access, tenant isolation, and encrypted connectors managed from a central console.</p>
+        </article>
+      </section>
+
+      <section class="copilot" id="copilot">
+        <div class="details">
+          <h3>How Cristine works with M365 Copilot</h3>
+          <p class="lead" style="margin-top:6px">Cristine augments Copilot by providing domain-aware workflows, safe prompt templates, and enterprise-grade governance. It operates as an extension and orchestration layer — shaping AI behavior, controlling external access, and ensuring compliance.</p>
+
+          <ul style="color:var(--muted);margin-top:12px">
+            <li>Seamless embedding inside Copilot experiences via extension points.</li>
+            <li>Pre-approved prompt workflows for legal, finance, HR and IT scenarios.</li>
+            <li>Full audit logs and reporting for regulatory needs.</li>
+          </ul>
+
+          <div style="margin-top:18px" class="cta-row">
+            <button class="btn primary" onclick="window.open('https://github.com/code4clouds/test','_blank')">View on GitHub</button>
+            <button class="btn ghost" onclick="window.location='#download'">Get Latest Release</button>
+          </div>
+        </div>
+
+        <div class="illustration" aria-hidden>
+          <svg width="320" height="220" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="304" height="204" rx="14" fill="url(#g)" opacity="0.08"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs></svg>
+        </div>
+      </section>
+
+      <section id="download" style="margin-top:32px">
+        <div class="download card" role="region" aria-labelledby="download-title">
+          <div class="meta">
+            <h3 id="download-title" style="margin:0 0 6px">Download Latest Release</h3>
+            <small id="release-info">Fetching latest release from GitHub...</small>
+          </div>
+
+          <div class="actions">
+            <a id="asset-link" class="btn primary" href="#" target="_blank" rel="noopener" aria-disabled="true">Download</a>
+            <button id="download-button" class="btn ghost" onclick="openReleases()">Open Releases</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;color:var(--muted);font-size:13px">If your organization uses an internal distribution channel, provide a signed release asset or contact your CI administrator. The button above pulls the latest public release from the configured GitHub repository.</div>
+      </section>
+
+      <section id="contact" style="margin-top:34px;display:flex;gap:24px;align-items:flex-start">
+        <div style="flex:1">
+          <h3>Request a Demo</h3>
+          <p style="color:var(--muted);margin-top:6px">Contact our enterprise team for pilot programs, tenant onboarding, and custom integrations.</p>
+          <form onsubmit="event.preventDefault();alert('Thanks — a representative will contact you.');" style="margin-top:12px">
+            <div style="display:flex;gap:8px">
+              <input required placeholder="Your name" style="flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+              <input required placeholder="Work email" type="email" style="flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            </div>
+            <div style="margin-top:12px"><textarea placeholder="Tell us about your use case" rows="4" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea></div>
+            <div style="margin-top:12px"><button class="btn primary" type="submit">Request Demo</button></div>
+          </form>
+        </div>
+
+        <aside style="width:320px">
+          <div class="card">
+            <h4 style="margin:0 0 8px">Enterprise Support</h4>
+            <p style="color:var(--muted);margin:0 0 12px">We provide dedicated onboarding, compliance reviews, and a 24/7 enterprise support SLA for production deployments.</p>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div style="width:40px;height:40px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center">S</div>
+              <div style="font-size:14px">sales@code4clouds.io</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <div>© 2025 Cristine — Code4Clouds</div>
+      <div>Designed for enterprise • Built for compliance</div>
+    </footer>
+  </div>
+
+  <script>
+    // Configuration: GitHub repo to fetch releases from (default to current workspace repo)
+    const GITHUB_OWNER = 'code4clouds';
+    const GITHUB_REPO = 'test';
+
+    const releaseInfoEl = document.getElementById('release-info');
+    const assetLinkEl = document.getElementById('asset-link');
+
+    async function fetchLatestRelease() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/latest`, {cache: 'no-store'});
+        if (!res.ok) throw new Error('Release not found');
+        const release = await res.json();
+        const assets = release.assets || [];
+        if (assets.length === 0) {
+          releaseInfoEl.textContent = 'No assets found in the latest release. Click "Open Releases" to view all releases.';
+          assetLinkEl.classList.remove('primary');
+          assetLinkEl.classList.add('ghost');
+          assetLinkEl.href = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/latest`;
+          assetLinkEl.setAttribute('aria-disabled','true');
+          assetLinkEl.textContent = 'Open Releases';
+          return;
+        }
+
+        // Pick the first asset by default
+        const asset = assets[0];
+        const sizeMB = (asset.size/1024/1024).toFixed(2);
+        releaseInfoEl.innerHTML = `<strong>${release.name || release.tag_name}</strong> — ${asset.name} • ${sizeMB} MB`;
+        assetLinkEl.href = asset.browser_download_url;
+        assetLinkEl.setAttribute('aria-disabled','false');
+        assetLinkEl.textContent = `Download ${asset.name}`;
+        assetLinkEl.addEventListener('click', ()=>{
+          // Analytics hook placeholder
+          console.log('Download started:', asset.name);
+        });
+      } catch (err) {
+        console.error(err);
+        releaseInfoEl.textContent = 'Unable to fetch release information. Open releases on GitHub to download manually.';
+        assetLinkEl.href = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/latest`;
+        assetLinkEl.classList.remove('primary');
+        assetLinkEl.classList.add('ghost');
+        assetLinkEl.setAttribute('aria-disabled','true');
+        assetLinkEl.textContent = 'Open Releases';
+      }
+    }
+
+    function openReleases() {
+      window.open(`https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/latest`, '_blank');
+    }
+
+    // Invoke on load
+    fetchLatestRelease();
+  </script>
+</body>
+</html>
